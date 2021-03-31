@@ -8,31 +8,34 @@ export default class App extends Component {
     super(props);
     this.state = {
 
-      menuSections: [],
-
+      menuSections: []
     }
   };
 
+  componentDidUpdate() {
+    window.localStorage.setItem('menuSections', JSON.stringify(this.state.menuSections))
+  }
   componentDidMount() {
+
+
     let apiURL = 'http://awesomeincbootcampapi-ianrios529550.codeanyapp.com:3000/public/api/menu/sections'
 
     Axios.get(apiURL)
         .then((response) => {
             console.log(response.data)
-            this.setState({ menuSections: response.data })
+            this.setState({ menuSections: response.data})
         })
         .catch(function (error) {
             console.log(error);
         })
+
 }
-
-
 
   render() {
     return (
       <div className="App">
         <br></br>
-        <h1>Yo Mommas Kitchen</h1>
+        <h1><b>Yo Mommas Kitchen</b></h1>
         <h4> 348 E Main St, Lexington, KY</h4>
         <h5>Open Friday only 11PM - 2PM</h5>
         <br></br>
