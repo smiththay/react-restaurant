@@ -16,20 +16,25 @@ export default class App extends Component {
     window.localStorage.setItem('menuSections', JSON.stringify(this.state.menuSections))
   }
   componentDidMount() {
+    let menuSections = window.localStorage.getItem('menuSections')
 
+    if (menuSections) {
+      this.setState({ menuSections: JSON.parse(menuSections) })
+    } else {
 
-    let apiURL = 'http://awesomeincbootcampapi-ianrios529550.codeanyapp.com:3000/public/api/menu/sections'
+      let apiURL = 'http://awesomeincbootcampapi-ianrios529550.codeanyapp.com:3000/public/api/menu/sections'
 
-    Axios.get(apiURL)
+      Axios.get(apiURL)
         .then((response) => {
-            console.log(response.data)
-            this.setState({ menuSections: response.data})
+          console.log(response.data)
+          this.setState({ menuSections: response.data })
         })
+        
         .catch(function (error) {
-            console.log(error);
+          console.log(error);
         })
-
-}
+    }
+  }
 
   render() {
     return (
@@ -41,7 +46,7 @@ export default class App extends Component {
         <br></br>
         <br></br>
         <h1>
-        {this.state.menuSections.map((section, index) => <Section key={index} section={section} />)}
+          {this.state.menuSections.map((section, index) => <Section key={index} section={section} />)}
         </h1>
         <br></br>
       </div>
